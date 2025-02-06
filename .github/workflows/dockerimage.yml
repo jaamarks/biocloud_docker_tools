@@ -29,6 +29,7 @@ jobs:
           PREVIOUS_COMMIT=$(git rev-parse HEAD^1) # Get the commit before the current one
           echo "files=$(git diff --name-only $PREVIOUS_COMMIT ${{ github.sha }} | xargs)" >> $GITHUB_OUTPUT
         fi    - name: Build, Tag, Publish Docker
+    - name: Build, Tag, Publish Docker
       uses: ./.github/actions/build-image
       with:
         organization: rtibiocloud

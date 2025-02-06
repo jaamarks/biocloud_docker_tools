@@ -1,5 +1,5 @@
 name: 'Build and Publish Docker'
-author: 'Chris Ball'
+author: 'Jesse Marks'
 branding:
   icon: 'code'
   color: 'green'

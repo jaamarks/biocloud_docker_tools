@@ -21,8 +21,14 @@ jobs:
     - name: get changed files
       id: getfile
       run: |
-        echo "files=$(git diff --name-only ${{  github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)" >> $GITHUB_OUTPUT
-    - name: Build, Tag, Publish Docker
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          BASE="${{ github.event.pull_request.base.sha }}"
+          echo "files=$(git diff --name-only $BASE ${{ github.sha }} | xargs)" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.event_name }}" == "push" ]]; then
+          # For pushes, get the previous commit on the branch
+          PREVIOUS_COMMIT=$(git rev-parse HEAD^1) # Get the commit before the current one
+          echo "files=$(git diff --name-only $PREVIOUS_COMMIT ${{ github.sha }} | xargs)" >> $GITHUB_OUTPUT
+        fi    - name: Build, Tag, Publish Docker
       uses: ./.github/actions/build-image
       with:
         organization: rtibiocloud

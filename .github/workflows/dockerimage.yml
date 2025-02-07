@@ -21,13 +21,8 @@ jobs:
     - name: Get changed files
       id: getfile
       run: |
-        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          BASE="${{ github.event.pull_request.base.sha }}"
-        elif [[ "${{ github.event_name }}" == "push" ]]; then
-          # For pushes, get the previous commit on the branch
-          PREVIOUS_COMMIT=$(git rev-parse HEAD^1) # Get the commit before the current one
-          BASE=$PREVIOUS_COMMIT
-        fi
+        # For pushes (including PR merges), get the previous commit on the master branch
+        BASE=$(git rev-parse HEAD^1)
         FILES=$(git diff --name-only "$BASE" ${{ github.sha }} | xargs)
         echo "files=$FILES" >> $GITHUB_OUTPUT
 

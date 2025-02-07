@@ -39,7 +39,7 @@ jobs:
       - name: Test Build Docker Images (Pull Request)
         if: github.event_name == 'pull_request'
         run: |
-          read -r first_file <<< "${{ steps.get_changed_files.outputs.files }}"
+          read -r first_file _ <<< "${{ steps.get_changed_files.outputs.files }}"
           ddir=$(dirname "$first_file")
           echo "Testing build"
           docker build -t test-image:latest "$ddir"

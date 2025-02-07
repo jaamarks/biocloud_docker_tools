@@ -94,7 +94,7 @@ function main() {
 
     echo "tag=${FIRST_TAG}" >> ${GITHUB_OUTPUT}
     DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${DOCKERNAME})
-    echo "digest=${DIGEST}" >> ${GITHUB_OUTPUT}"
+    echo "digest=${DIGEST}" >> ${GITHUB_OUTPUT}
     docker logout
 }
 
